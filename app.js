@@ -46,8 +46,7 @@ function syncGet(url) {
 
 async function loadOgSources(match, parseDataAndCreateOg) {
   while (url = match.pop()) {
-    let data = await syncGet(url)
-    parseDataAndCreateOg(data)
+    let data = await syncGet(url).then(data => parseDataAndCreateOg(data))
   }
 }
 
@@ -69,7 +68,8 @@ socketServer.on('connection', (socket) => {
           let titleTag = tags.find(tag => tag.property == 'og:title')
           let descriptionTag = tags.find(tag => tag.property == 'og:description')
           let imageTag = tags.find(tag => tag.property == 'og:image')
-          item.createOg({
+          console.log('Before Create Og')
+          return item.createOg({
             title: titleTag && titleTag.content,
             description: descriptionTag && descriptionTag.content,
             image: imageTag && imageTag.content,
@@ -77,6 +77,7 @@ socketServer.on('connection', (socket) => {
         })
       }
 
+      console.log('Before Reload Message')
       item.reload({ include: [{ model:db.og }] }).then(msg => {
         let message = msg.get({ plain: true })
         console.log('Emit message:')
