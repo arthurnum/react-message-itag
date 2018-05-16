@@ -77,7 +77,7 @@ socketServer.on('connection', (socket) => {
         })
       }
 
-      db.message.findById(itemData.id, {include:[{model:db.og}]}).then(msg => {
+      item.reload({ include: [{ model:db.og }] }).then(msg => {
         let message = msg.get({ plain: true })
         console.log('Emit message:')
         console.log(message)
