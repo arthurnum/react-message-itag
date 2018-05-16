@@ -4,6 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
+    "postinstall": "cd react-message-cli && npm run-script build",
     "start": "node app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
