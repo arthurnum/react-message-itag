@@ -78,7 +78,10 @@ socketServer.on('connection', (socket) => {
       }
 
       db.message.findById(itemData.id, {include:[{model:db.og}]}).then(msg => {
-        socketServer.emit('newMessage', JSON.stringify(msg.get({plain:true})));
+        let message = msg.get({ plain: true })
+        console.log('Emit message:')
+        console.log(message)
+        socketServer.emit('newMessage', JSON.stringify(message));
       })
 
     })
