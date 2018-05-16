@@ -10,12 +10,18 @@ const dbConfig = {
   }
 };
 
-let db = new Sequelize(
-  dbConfig.DB_NAME,
-  dbConfig.DB_USER,
-  dbConfig.DB_PASSWORD,
-  dbConfig.DB_OPTIONS
-);
+const connectDb = () => {
+  return process.env.DATABASE_URL &&
+    new Sequelize(process.env.DATABASE_URL) ||
+    new Sequelize(
+      dbConfig.DB_NAME,
+      dbConfig.DB_USER,
+      dbConfig.DB_PASSWORD,
+      dbConfig.DB_OPTIONS
+    )
+}
+
+const db = connectDb()
 
 const messageFields = {
   id: {
