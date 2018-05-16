@@ -30,8 +30,8 @@ app.get('/messages', function (req, res) {
   });
 });
 
-
-let httpServer = app.listen(8080);
+const PORT = process.env.PORT || 8080
+let httpServer = app.listen(PORT)
 
 function syncGet(url) {
   return new Promise((resolve, reject) => {
