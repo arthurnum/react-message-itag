@@ -58,13 +58,13 @@ li {
       .chatWrapper .chatContent .messageWrapper .ogImage {
         height: 100px;
         border-radius: 5px 65px 5px 65px;
-        opacity: 0.5; }
+        opacity: 0.6; }
       .chatWrapper .chatContent .messageWrapper .ogTitle {
         display: block;
         position: absolute;
         top: 0px;
         padding: 2px;
-        color: black;
+        color: #335;
         text-shadow: 0px 0px 3px white; }
   .chatWrapper .chatInput {
     flex: 0 0 50px;
