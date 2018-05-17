@@ -8,6 +8,7 @@ const cheerio = require('cheerio');
 const { StringDecoder } = require('string_decoder');
 const decoder = new StringDecoder('utf8');
 const db = require('./db');
+const og = require('./services/openGraph')
 
 app.use(express.static(path.join(__dirname, 'react-message-cli/build')));
 app.use(bodyParser.json());
@@ -33,22 +34,6 @@ app.get('/messages', function (req, res) {
 const PORT = process.env.PORT || 8080
 let httpServer = app.listen(PORT)
 
-function syncGet(url) {
-  return new Promise((resolve, reject) => {
-    https.get(url, res => {
-      let data = ''
-
-      res.on('data', chunk => data += chunk)
-      res.on('end', () => resolve(data))
-    }).on('error', (e) => reject(e))
-  })
-}
-
-async function loadOgSources(match, parseDataAndCreateOg) {
-  while (url = match.pop()) {
-    let data = await syncGet(url).then(data => parseDataAndCreateOg(data))
-  }
-}
 
 // Websocket
 let socketServer = new io(httpServer);
@@ -56,36 +41,22 @@ console.log('Socket');
 socketServer.on('connection', (socket) => {
   console.log('connected');
 
-  socket.on('newMessage', data => {
-    db.message.create(JSON.parse(data)).then(async item => {
-      itemData = item.get();
-      socketServer.emit('newMessage', JSON.stringify(itemData));
-
-      if (match = item.message.match(/(https:\/\/[\w.\/]+)/g)) {
-        await loadOgSources(match, data => {
-          let html = cheerio.load(data);
-          tags = html('meta[property^="og:"]').toArray().map(tag => {return tag.attribs});
-          let titleTag = tags.find(tag => tag.property == 'og:title')
-          let descriptionTag = tags.find(tag => tag.property == 'og:description')
-          let imageTag = tags.find(tag => tag.property == 'og:image')
-          console.log('Before Create Og')
-          return item.createOg({
-            title: titleTag && titleTag.content,
-            description: descriptionTag && descriptionTag.content,
-            image: imageTag && imageTag.content,
-          })
-        })
-      }
-
-      console.log('Before Reload Message')
-      item.reload({ include: [{ model:db.og }] }).then(msg => {
-        let message = msg.get({ plain: true })
-        console.log('Emit message:')
-        console.log(message)
-        socketServer.emit('newMessage', JSON.stringify(message));
-      })
-
-    })
-  });
-
+  socket.on('newMessage', newMessageHandler);
 });
+
+async function newMessageHandler(data) {
+  let item = await db.message.create(JSON.parse(data))
+  let itemData = item.get();
+  socketServer.emit('newMessage', JSON.stringify(itemData));
+
+  if (match = item.message.match(/(https:\/\/[\w.\/]+)/g)) {
+    await og.getForItem(item, match)
+  }
+
+  console.log('Before Reload Message')
+  let msg = await item.reload({ include: [{ model:db.og }] })
+  let message = msg.get({ plain: true })
+  console.log('Emit message:')
+  console.log(message)
+  socketServer.emit('newMessage', JSON.stringify(message))
+}
