@@ -11,9 +11,11 @@ class ChatMessage extends React.Component {
 
     return (
       <div className="messageWrapper">
-        <span>{this.props.user}</span>
-        <p>{this.props.message}</p>
-        { ogs }
+        <div className="message">
+          <span>{this.props.user}</span>
+          <p>{this.props.message}</p>
+          { ogs }
+        </div>
       </div>
     );
   }

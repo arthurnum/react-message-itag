@@ -15,7 +15,7 @@ class Chat extends React.Component {
   }
 
   componentDidMount() {
-    
+
   }
 
   chatInputCallback(message) {

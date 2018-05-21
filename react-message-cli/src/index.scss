@@ -64,33 +64,54 @@ li {
     font-size: 0.8em;
 
     .messageWrapper {
-      margin-bottom: 1em;
-      word-break: break-all;
+      margin-bottom: 0.5em;
+      overflow-y: hidden;
 
-      span {
-        font-weight: bold;
-      }
-
-      a {
-        display: block;
+      .message {
+        word-break: break-all;
+        animation-duration: 0.5s;
+        animation-name: showup;
+        padding-bottom: 0.2em;
         position: relative;
+
+        span {
+          font-weight: bold;
+        }
+
+        a {
+          display: block;
+          position: relative;
+        }
+
+        .ogImage {
+          height: 100px;
+          border-radius: 5px 65px 5px 65px;
+          opacity: 0.6;
+        }
+
+        .ogTitle {
+          display: block;
+          position: absolute;
+          top: 0px;
+          padding: 2px;
+          color: #335;
+          text-shadow: 0px 0px 3px white;
+        }
+
       }
 
-      .ogImage {
-        height: 100px;
-        border-radius: 5px 65px 5px 65px;
-        opacity: 0.6;
+      @keyframes showup {
+        from {
+          top: 100px;
+        }
+
+        to {
+          top: 0px;
+        }
       }
 
-      .ogTitle {
-        display: block;
-        position: absolute;
-        top: 0px;
-        padding: 2px;
-        color: #335;
-        text-shadow: 0px 0px 3px white;
-      }
     }
+
   }
 
   .chatInput {
