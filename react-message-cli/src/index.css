@@ -20,7 +20,8 @@ li {
   display: flex;
   height: 100%;
   padding: 2em 1em;
-  box-sizing: border-box; }
+  box-sizing: border-box;
+  background-color: #eed; }
 
 .roomsWrapper {
   flex: 0 0 200px; }
