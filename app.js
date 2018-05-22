@@ -51,12 +51,13 @@ async function newMessageHandler(data) {
 
   if (match = item.message.match(/(https:\/\/[\w.\/]+)/g)) {
     await og.getForItem(item, match)
-  }
 
-  console.log('Before Reload Message')
-  let msg = await item.reload({ include: [{ model:db.og }] })
-  let message = msg.get({ plain: true })
-  console.log('Emit message:')
-  console.log(message)
-  socketServer.emit('newMessage', JSON.stringify(message))
+    console.log('Before Reload Message')
+    let msg = await item.reload({ include: [{ model:db.og }] })
+    let message = msg.get({ plain: true })
+
+    console.log('Emit message:')
+    console.log(message)
+    socketServer.emit('newMessage', JSON.stringify(message))
+  }
 }
