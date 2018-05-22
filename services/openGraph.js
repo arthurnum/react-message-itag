@@ -1,5 +1,6 @@
-const cheerio = require('cheerio');
+const cheerio = require('cheerio')
 const syncHttpsGet = require('./syncHttpsGet')
+const filterUniq = require('../support').filterUniq
 
 class Og {
   constructor(tags) {
@@ -20,6 +21,7 @@ class Og {
 
 
 async function loadOgSources(urls, parseDataAndCreateOg) {
+  urls = filterUniq(urls)
   while (url = urls.pop()) {
     await parseDataAndCreateOg(await syncHttpsGet(url))
   }
