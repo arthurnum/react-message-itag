@@ -39,7 +39,7 @@ let httpServer = app.listen(PORT)
 let socketServer = new io(httpServer);
 console.log('Socket');
 socketServer.on('connection', (socket) => {
-  console.log('connected');
+  console.log(`Connected ${socket.request.headers['user-agent']}`);
 
   socket.on('newMessage', newMessageHandler);
 });
