@@ -11,7 +11,7 @@ class ChatContent extends React.Component {
   render() {
     const content = this.props.data.map((item) => {
       return (
-        <ChatMessage key={item.id} user={item.user} message={item.message} ogs={item.ogs} />
+        <ChatMessage key={item.id} messageItem={item} />
       )
     });
 

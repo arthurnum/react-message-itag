@@ -3,7 +3,9 @@ import ChatOpenGraphLink from './chatOpenGraphLink'
 
 class ChatMessage extends React.Component {
   render() {
-    let ogs = this.props.ogs && this.props.ogs.map(og => {
+    let msg = this.props.messageItem
+
+    let ogs = msg.ogs && msg.ogs.map(og => {
       return (
         <ChatOpenGraphLink og={og} />
       )
@@ -12,8 +14,8 @@ class ChatMessage extends React.Component {
     return (
       <div className="messageWrapper">
         <div className="message">
-          <span>{this.props.user}</span>
-          <p>{this.props.message}</p>
+          <span>{msg.user}</span>
+          <p>{msg.message}</p>
           { ogs }
         </div>
       </div>
