@@ -58,6 +58,6 @@ async function newMessageHandler(data) {
 
     console.log('Emit message:')
     console.log(message)
-    socketServer.emit('newMessage', JSON.stringify(message))
+    socketServer.emit('updateMessage', JSON.stringify(message))
   }
 }

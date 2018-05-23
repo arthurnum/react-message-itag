@@ -4,6 +4,10 @@ const newMessage = data => {
   return { type: 'addMessage', data }
 }
 
+const updateMessage = data => {
+  return { type: 'updateMessage', data }
+}
+
 const getItems = () => (dispatch, getState) =>
   // api.get('/items?page=' + getState().page)
   api.get('/messages')
@@ -15,4 +19,4 @@ const getItems = () => (dispatch, getState) =>
     return dispatch(action)
   })
 
-export { newMessage }
+export { newMessage, updateMessage }

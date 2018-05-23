@@ -8,7 +8,7 @@ import registerServiceWorker from './registerServiceWorker';
 import Chat from './components/chat';
 import chatStore from './stores/chatStore';
 import { socket } from './webSocket';
-import { newMessage } from './actions/chatActions';
+import { newMessage, updateMessage } from './actions/chatActions';
 
 ReactDOM.render(
   <Provider store={chatStore}>
@@ -21,4 +21,8 @@ registerServiceWorker();
 
 socket.on('newMessage', data => {
   chatStore.dispatch(newMessage(JSON.parse(data)));
+})
+
+socket.on('updateMessage', data => {
+  chatStore.dispatch(updateMessage(JSON.parse(data)));
 })
