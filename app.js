@@ -49,7 +49,7 @@ async function newMessageHandler(data) {
   let itemData = item.get();
   socketServer.emit('newMessage', JSON.stringify(itemData));
 
-  if (match = item.message.match(/(https:\/\/[\w.\/]+)/g)) {
+  if (match = item.message.match(/(https:\/\/[\w.\/-]+)/g)) {
     await og.getForItem(item, match)
 
     console.log('Before Reload Message')
