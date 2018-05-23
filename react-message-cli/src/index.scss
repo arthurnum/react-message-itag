@@ -87,7 +87,6 @@ li {
         .ogImage {
           height: 100px;
           border-radius: 5px 65px 5px 65px;
-          opacity: 0.6;
         }
 
         .ogTitle {
@@ -96,7 +95,7 @@ li {
           top: 0px;
           padding: 2px;
           color: #335;
-          text-shadow: 0px 0px 3px white;
+          background-color: rgba(238,238,221,0.6);
         }
 
       }
