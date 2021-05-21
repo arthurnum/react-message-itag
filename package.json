@@ -11,12 +11,12 @@
   "author": "arthurnum",
   "license": "ISC",
   "dependencies": {
-    "cheerio": "^1.0.0-rc.2",
-    "express": "^4.16.3",
-    "mysql2": "^1.5.3",
-    "pg": "^7.4.3",
+    "cheerio": "^1.0.0-rc.9",
+    "express": "^4.17.0",
+    "mysql2": "^1.7.0",
+    "pg": "^7.18.0",
     "sequelize": "^4.37.6",
-    "socket.io": "^2.1.0",
-    "sqlite3": "^4.0.0"
+    "socket.io": "^2.4.0",
+    "sqlite3": "^5.0.0"
   }
 }

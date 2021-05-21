@@ -11,8 +11,13 @@ const dbConfig = {
 };
 
 const connectDb = () => {
-  return process.env.DATABASE_URL &&
-    new Sequelize(process.env.DATABASE_URL) ||
+  return process.env.DATABASE_HOST &&
+    new Sequelize(
+      process.env.DATABASE_NAME,
+      process.env.DATABASE_USER,
+      process.env.DATABASE_PASSWORD,
+      { host: process.env.DATABASE_HOST, dialect: 'postgres' }
+    ) ||
     new Sequelize(
       dbConfig.DB_NAME,
       dbConfig.DB_USER,
